@@ -78,7 +78,7 @@ class LoginScreen(customtkinter.CTkFrame):   #Each Screen is a different CTK Fra
         backbtn = customtkinter.CTkButton(master=self, command =lambda:self.backbutton(master), width=rrw*120, hover_color='maroon',bg_color= '#252526', fg_color='#252526', image= backarrows, text=None)
         backbtn.place(x=rrw*10, y=rrh*10)
 
-        loginbt = customtkinter.CTkButton(master=self, text="Login", width=rrw*400,height=rrh*30, command=lambda: self.logincheck(master,username_entry, password_entry),bg_color= '#252526',corner_radius=5)
+        loginbt = customtkinter.CTkButton(master=self, text="Login", width=rrw*400,height=rrh*30, command=lambda: self.logincheck(master,username_entry, password_entry),bg_color= '#252526',corner_radius=100)
         loginbt.place(x=rrw*760,y=rrh*550)
 
 class HomeScreen(customtkinter.CTkFrame):
@@ -166,6 +166,9 @@ class HomeScreen(customtkinter.CTkFrame):
         
         TS_Duration_Menu = customtkinter.CTkEntry(self, fg_color=widget_color, bg_color=main_fg, width=rrw*115, height=rrh*30, border_color=widget_color
                                                   ,font=('Segoe UI', rrh*15)).place(x=rrw*660,y=rrh*665)
+        
+        TS_Start_Button = customtkinter.CTkButton(self, fg_color=widget_color, bg_color=main_fg, width=rrw*460, height=rrh*50
+                                                  , text="Begin").place(x=rrw*330,y=rrh*750) # add ',command = lambda: **function**, after 'text = 'Begin' '
 
         temp1_slot = customtkinter.CTkLabel(self, text=None, fg_color=main_fg, bg_color=main_bg, width = rrw*500, height = rrh*430, corner_radius= 5).place(x=rrw*310, y=rrh*830)
 
@@ -332,12 +335,12 @@ class App(customtkinter.CTk):
         customtkinter.set_appearance_mode("light")                   #could be changed to match system appearance and other widgets could be modified based on appearance mode
         customtkinter.set_default_color_theme("dark-blue")                             
         width, height = self.winfo_screenwidth(), self.winfo_screenheight()
-        rrw = 1920/width
-        rrh= 1080/height
-        self.login_frame = LoginScreen(master=self, width = 1920, height = 1080) # initializing Login Screen frame
-        self.home_frame = HomeScreen(master=self, width = 1920, height = 1080)  # initializing Home Screen frame
-        self.sv_frame = SupervisorScreen(master=self, width = 1920, height = 1080)  # initializing Supervisor Screen frame
-        self.newmethod_frame = NewMethodScreen(master=self, width = 1920, height = 1080)  # initializing Supervisor Screen frame
+        rrw = width/1920
+        rrh= height/1080
+        self.login_frame = LoginScreen(master=self, width =rrw*1920, height = rrh*1080) # initializing Login Screen frame
+        self.home_frame = HomeScreen(master=self, width = rrw*1920, height = rrh*1080)  # initializing Home Screen frame
+        self.sv_frame = SupervisorScreen(master=self, width = rrw*1920, height = rrh*1080)  # initializing Supervisor Screen frame
+        self.newmethod_frame = NewMethodScreen(master=self, width = rrw*1920, height = rrh*1080)  # initializing Supervisor Screen frame
         self.home_frame.pack(side="top", expand=True, fill="both")              # packing Homescreen frame by default
 
         
