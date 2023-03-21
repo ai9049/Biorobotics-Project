@@ -89,6 +89,26 @@ class HomeScreen(customtkinter.CTkFrame):
         master.LoginFrame()
     def newmethodbtn(self,master):
         master.NewMethodFrame()
+    def displayhistory(self, count, y_pos, rrw, rrh):
+        History_RC=customtkinter.CTkButton(self,  text=History_set.iloc[count,0], width = rrw*175, height=rrh*30, 
+                                                     bg_color=main_fg, fg_color=main_fg, text_color=main_text, command = lambda: print(History_set.iloc[count,0])).place(x=rrw*322.5, y=rrh*y_pos)
+        History_Date=customtkinter.CTkButton(self, text=History_set.iloc[count,1], width = rrw*175, height=rrh*30,
+                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text, command = lambda: print(History_set.iloc[count,1])).place(x=rrw*497.5, y=rrh*y_pos)
+        History_R1=customtkinter.CTkButton(self, text=History_set.iloc[count,2], width = rrw*175, height=rrh*30,
+                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text, command = lambda: print(History_set.iloc[count,2])).place(x=rrw*672.5, y=rrh*y_pos)
+        History_R2=customtkinter.CTkButton(self, text=History_set.iloc[count,3], width = rrw*175, height=rrh*30,
+                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text, command = lambda: print(History_set.iloc[count,3])).place(x=rrw*847.5, y=rrh*y_pos)
+        History_TSR=customtkinter.CTkButton(self,  text=History_set.iloc[count,4], width = rrw*175, height=rrh*30, 
+                                                     bg_color=main_fg, fg_color=main_fg, text_color=main_text, command = lambda: print(History_set.iloc[count,4])).place(x=rrw*1022.5, y=rrh*y_pos)
+        History_TSD=customtkinter.CTkButton(self, text=History_set.iloc[count,5], width = rrw*175, height=rrh*30,
+                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text, command = lambda: print(History_set.iloc[count,5])).place(x=rrw*1197.5, y=rrh*y_pos)
+        History_TST=customtkinter.CTkButton(self, text=History_set.iloc[count,6], width = rrw*175, height=rrh*30,
+                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text, command = lambda: print(History_set.iloc[count,6])).place(x=rrw*1372.5, y=rrh*y_pos)
+        History_CR=customtkinter.CTkButton(self, text=History_set.iloc[count,7], width = rrw*175, height=rrh*30,
+                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text, command = lambda: print(History_set.iloc[count,7])).place(x=rrw*1547.5, y=rrh*y_pos)
+        History_CD=customtkinter.CTkButton(self, text=History_set.iloc[count,8], width = rrw*175, height=rrh*30,
+                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text, command = lambda: print(History_set.iloc[count,8])).place(x=rrw*1722.5, y=rrh*y_pos)
+            
 
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
@@ -110,8 +130,8 @@ class HomeScreen(customtkinter.CTkFrame):
         homebtn = customtkinter.CTkButton(master=self, text="Home", text_color= 'White', 
                                               width=rrw*280, height = rrh*30, corner_radius= 5, fg_color='#1e1e1e', hover=False).place(x=rrw*10, y=rrh*200)
         
-        history_entrybtn = customtkinter.CTkButton(master=self, text="Record New Method", text_color= 'White', command = lambda:self.newmethodbtn(master), 
-                                              width=rrw*280, height = rrh*30, corner_radius= 5).place(x=rrw*10, y=rrh*240)
+        #history_entrybtn = customtkinter.CTkButton(master=self, text="Record New Method", text_color= 'White', command = lambda:self.newmethodbtn(master), 
+        #                                      width=rrw*280, height = rrh*30, corner_radius= 5).place(x=rrw*10, y=rrh*240)
 
         ## main screen
         global main_bg,main_fg,main_text,widget_color
@@ -139,24 +159,7 @@ class HomeScreen(customtkinter.CTkFrame):
         count=0
         for y_pos in range(80,480,50):     #alternative method is to use TreeView, which seemed very clunky and confusing + had the same #, if not more, lines of code
             if np.isnat(np.datetime64(str(History_set.iloc[count,1]))) == False:
-                History_RC=customtkinter.CTkButton(self,  text=History_set.iloc[count,0], width = rrw*175, height=rrh*30, 
-                                                     bg_color=main_fg, fg_color=main_fg, text_color=main_text).place(x=rrw*322.5, y=rrh*y_pos)
-                History_Date=customtkinter.CTkButton(self, text=History_set.iloc[count,1], width = rrw*175, height=rrh*30,
-                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text).place(x=rrw*497.5, y=rrh*y_pos)
-                History_R1=customtkinter.CTkButton(self, text=History_set.iloc[count,2], width = rrw*175, height=rrh*30,
-                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text).place(x=rrw*672.5, y=rrh*y_pos)
-                History_R2=customtkinter.CTkButton(self, text=History_set.iloc[count,3], width = rrw*175, height=rrh*30,
-                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text).place(x=rrw*847.5, y=rrh*y_pos)
-                History_TSR=customtkinter.CTkButton(self,  text=History_set.iloc[count,4], width = rrw*175, height=rrh*30, 
-                                                     bg_color=main_fg, fg_color=main_fg, text_color=main_text).place(x=rrw*1022.5, y=rrh*y_pos)
-                History_TSD=customtkinter.CTkButton(self, text=History_set.iloc[count,5], width = rrw*175, height=rrh*30,
-                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text).place(x=rrw*1197.5, y=rrh*y_pos)
-                History_TST=customtkinter.CTkButton(self, text=History_set.iloc[count,6], width = rrw*175, height=rrh*30,
-                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text).place(x=rrw*1372.5, y=rrh*y_pos)
-                History_CR=customtkinter.CTkButton(self, text=History_set.iloc[count,7], width = rrw*175, height=rrh*30,
-                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text).place(x=rrw*1547.5, y=rrh*y_pos)
-                History_CD=customtkinter.CTkButton(self, text=History_set.iloc[count,8], width = rrw*175, height=rrh*30,
-                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text).place(x=rrw*1722.5, y=rrh*y_pos)
+                self.displayhistory(count, y_pos, rrw, rrh)
             count+=1
         
         ## REAGENT OPTIONS
@@ -193,16 +196,17 @@ class HomeScreen(customtkinter.CTkFrame):
         RS_slot = customtkinter.CTkLabel(self, text=None, fg_color=main_fg, bg_color=main_bg, width = rrw*410, height = rrh*550, corner_radius= 5).place(x=rrw*310, y=rrh*520)
         av_check=0
         count=0
+        
         for x_pos in range (330,700,100):
             count = 0
-            for y_pos in range (550,980,100):
+            for y_pos in range (550,1030,30):
                 
                 if RS_set.iloc[count,av_check]==1:
-                    RS_grid = customtkinter.CTkButton(self,text=str(count+1), fg_color='green', bg_color=main_fg, width= 70, height = 70, corner_radius= 20, hover_color='light green').place(x=rrw*x_pos, y=rrh*y_pos)
+                    RS_grid = customtkinter.CTkButton(self,text=str(count+1), fg_color='green', bg_color=main_fg, width= 70, height = 10, corner_radius= 20, hover_color='light green').place(x=rrw*x_pos, y=rrh*y_pos)
                 elif RS_set.iloc[count,av_check]==2:
-                    RS_grid = customtkinter.CTkButton(self,text=str(count+1), fg_color=widget_color, bg_color=main_fg, width= 70, height = 70, corner_radius= 20).place(x=rrw*x_pos, y=rrh*y_pos)
+                    RS_grid = customtkinter.CTkButton(self,text=str(count+1), fg_color=widget_color, bg_color=main_fg, width= 70, height = 10, corner_radius= 20).place(x=rrw*x_pos, y=rrh*y_pos)
                 else:
-                    RS_grid = customtkinter.CTkButton(self,text=str(count+1), fg_color='maroon', bg_color=main_fg, width= 70, height = 70, corner_radius= 20, hover=False).place(x=rrw*x_pos, y=rrh*y_pos)
+                    RS_grid = customtkinter.CTkButton(self,text=str(count+1), fg_color=main_bg, bg_color=main_fg, width= 70, height = 10, corner_radius= 20, hover=False).place(x=rrw*x_pos, y=rrh*y_pos)
                 count+=1
             av_check+=2
         Reagent_legend = customtkinter.CTkButton(self, text = "Reagent", fg_color=widget_color, bg_color=main_fg, width = rrw*185, height=rrh* 20, hover=False, corner_radius=0).place(x=rrw*330,y=rrh*1040)
@@ -210,9 +214,9 @@ class HomeScreen(customtkinter.CTkFrame):
 
         
 
-        temp3_slot = customtkinter.CTkLabel(self, text=None, fg_color=main_fg, bg_color=main_bg, width = rrw*580, height = rrh*270, corner_radius= 5).place(x=rrw*1330, y=rrh*520)
+        temp3_slot = customtkinter.CTkLabel(self, text=None, fg_color=main_fg, bg_color=main_bg, width = rrw*670, height = rrh*270, corner_radius= 5).place(x=rrw*1240, y=rrh*520)
 
-        temp4_slot = customtkinter.CTkLabel(self, text=None, fg_color=main_fg, bg_color=main_bg, width = rrw*580, height = rrh*270, corner_radius= 5).place(x=rrw*1330, y=rrh*800)
+        temp4_slot = customtkinter.CTkLabel(self, text=None, fg_color=main_fg, bg_color=main_bg, width = rrw*670, height = rrh*270, corner_radius= 5).place(x=rrw*1240, y=rrh*800)
 
 
 class NewMethodScreen(customtkinter.CTkFrame):
@@ -224,7 +228,7 @@ class NewMethodScreen(customtkinter.CTkFrame):
         master.NewMethodFrame()
     def backbutton(self,master):            #self relates to frame, master relates to App(). 
         #self.pack_forget()                  #pack_forget allows for the frame to be packed again, while destroy() requires another initialization of the frame
-        master.HomeFrame()                  #after frame is removed, go back to home frame
+        master.SVFrame()                  #after frame is removed, go back to home frame
                
 
     def __init__(self, master, **kwargs):
@@ -233,27 +237,30 @@ class NewMethodScreen(customtkinter.CTkFrame):
         rrw = width/1920
         rrh= height/1080
         global History_set
+        left_slot = customtkinter.CTkButton(self,text=None,bg_color='#2b2b2b',fg_color='#2b2b2b',width=rrw*300,height=rrh*1080,corner_radius=0, hover=False).place(x=0,y=0)
         logo = customtkinter.CTkImage(dark_image= Image.open(r"RITBIO.png"),size=(rrw*400,rrh*400))   # change logo here - insert path if not in same folder, r" converts to raw string
-        logobutton = customtkinter.CTkButton(self,image= logo,bg_color= 'transparent',fg_color="transparent", text= None, hover=False)
+        logobutton = customtkinter.CTkButton(self,image= logo,bg_color= '#2b2b2b',fg_color='#2b2b2b', text= None, hover=False)
         logobutton.place( x=rrw*-70, y=rrh*-100)
         ## left panel
+        
         exitbtn = customtkinter.CTkButton(master=self, text="Exit", text_color= 'white', command=lambda:self.exitbutton(master), 
-                                          width=rrw*280, height = rrh*30, hover_color='maroon',bg_color= 'transparent', corner_radius= 5).place(x=rrw*10, y=rrh*1030)
+                                          width=rrw*280, height = rrh*30, hover_color='maroon',bg_color= '#2b2b2b', corner_radius= 5).place(x=rrw*10, y=rrh*1030)
         
         sv_loginbtn = customtkinter.CTkButton(master=self, text="Supervisor Login", text_color= 'White', command = lambda:self.sv_login(master), 
-                                              width=rrw*280, height = rrh*30, corner_radius= 5).place(x=rrw*10, y=rrh*990)
+                                              width=rrw*280, height = rrh*30, corner_radius= 5, bg_color='#2b2b2b').place(x=rrw*10, y=rrh*990)
         
         homebtn = customtkinter.CTkButton(master=self, text="Home", text_color= 'White', 
-                                              width=rrw*280, height = rrh*30, corner_radius= 5, command= lambda: self.backbutton(master)).place(x=rrw*10, y=rrh*200)
+                                              width=rrw*280, height = rrh*30, corner_radius= 5, command= lambda: self.backbutton(master),bg_color='#2b2b2b').place(x=rrw*10, y=rrh*200)
 
-        history_entrybtn = customtkinter.CTkButton(master=self, text="Record New Method", text_color= 'White', 
-                                              width=rrw*280, height = rrh*30, corner_radius= 5, fg_color='#1e1e1e', hover=False).place(x=rrw*10, y=rrh*240)
+        history_entrybtn = customtkinter.CTkButton(master=self, text="Record New Method", text_color= '#212121', 
+                                              width=rrw*280, height = rrh*30, corner_radius= 5, fg_color='white', hover=False,bg_color='#2b2b2b').place(x=rrw*10, y=rrh*240)
         
 
         ## main screen
-        main_bg = '#1e1e1e'
-        main_fg = '#151515'
-        main_text = 'White'
+        main_bg = '#e0e0e0'
+        main_fg = 'white'
+        main_text = '#2b2b2b'
+        label_text = 'white'
         widget_color='#376489'
 
         mainscreen = customtkinter.CTkLabel(self, text=None, fg_color=main_bg, height=rrh*1100, width=rrw*1620, corner_radius = 10)
@@ -263,15 +270,15 @@ class NewMethodScreen(customtkinter.CTkFrame):
 
         History_slot = customtkinter.CTkLabel(self, text=None, fg_color=main_fg, bg_color=main_bg, width = rrw*1600, height = rrh*860, corner_radius= 10).place(x=rrw*310, y=rrh*190)
         #History_Frame = customtkinter.CTkLabel(self, text=None, fg_color=widget_color, bg_color=main_fg, width=1560, height= 460, corner_radius=10).place(x=330, y=30)
-        History_RC_Label = customtkinter.CTkLabel(self, text="Robot Code", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=main_text).place(x=rrw*322.5,y=rrh*200)
-        History_Date_Label = customtkinter.CTkLabel(self, text="Date", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=main_text).place(x=rrw*497.5,y=rrh*200)
-        History_R1_Label = customtkinter.CTkLabel(self, text="Reagent 1", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=main_text).place(x=rrw*672.5,y=rrh*200)
-        History_R2_Label = customtkinter.CTkLabel(self, text="Reagent 2", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=main_text).place(x=rrw*847.5,y=rrh*200)
-        History_TSR_Label = customtkinter.CTkLabel(self, text="Thermal Shaker RPM", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=main_text).place(x=rrw*1022.5,y=rrh*200)
-        History_TSD_Label = customtkinter.CTkLabel(self, text="Thermal Shaker Duration", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=main_text).place(x=rrw*1197.5,y=rrh*200)
-        History_TST_Label = customtkinter.CTkLabel(self, text="Thermal Shaker Temperature", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=main_text).place(x=rrw*1372.5,y=rrh*200)
-        History_CR_Label = customtkinter.CTkLabel(self, text="Centrifuge RPM", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=main_text).place(x=rrw*1547.5,y=rrh*200)
-        History_CD_Label = customtkinter.CTkLabel(self, text="Centrifuge Duration", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=main_text).place(x=rrw*1722.5,y=rrh*200)
+        History_RC_Label = customtkinter.CTkLabel(self, text="Robot Code", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=label_text).place(x=rrw*322.5,y=rrh*200)
+        History_Date_Label = customtkinter.CTkLabel(self, text="Date", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=label_text).place(x=rrw*497.5,y=rrh*200)
+        History_R1_Label = customtkinter.CTkLabel(self, text="Reagent 1", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=label_text).place(x=rrw*672.5,y=rrh*200)
+        History_R2_Label = customtkinter.CTkLabel(self, text="Reagent 2", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=label_text).place(x=rrw*847.5,y=rrh*200)
+        History_TSR_Label = customtkinter.CTkLabel(self, text="Thermal Shaker RPM", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=label_text).place(x=rrw*1022.5,y=rrh*200)
+        History_TSD_Label = customtkinter.CTkLabel(self, text="Thermal Shaker Duration", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=label_text).place(x=rrw*1197.5,y=rrh*200)
+        History_TST_Label = customtkinter.CTkLabel(self, text="Thermal Shaker Temperature", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=label_text).place(x=rrw*1372.5,y=rrh*200)
+        History_CR_Label = customtkinter.CTkLabel(self, text="Centrifuge RPM", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=label_text).place(x=rrw*1547.5,y=rrh*200)
+        History_CD_Label = customtkinter.CTkLabel(self, text="Centrifuge Duration", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=label_text).place(x=rrw*1722.5,y=rrh*200)
         History_set=History_set.sort_values(by="Date", ascending=False)
 
         count=0
@@ -308,7 +315,7 @@ class NewMethodScreen(customtkinter.CTkFrame):
         LabelX_Entry = customtkinter.CTkEntry(self, bg_color=main_fg,fg_color='white',placeholder_text='Label X', text_color='black',width=rrw*280, height=rrh*10, corner_radius=0).place(x=rrw*790, y=rrh*100)
         LabelY_Entry = customtkinter.CTkEntry(self, bg_color=main_fg,fg_color='white',placeholder_text='Label Y', text_color='black',width=rrw*280, height=rrh*10, corner_radius=0).place(x=rrw*1177, y=rrh*100)
         LabelZ_Entry = customtkinter.CTkEntry(self, bg_color=main_fg,fg_color='white',placeholder_text='Label Z', text_color='black',width=rrw*280, height=rrh*10, corner_radius=0).place(x=rrw*1564, y=rrh*100)
-        newmethod_btn = customtkinter.CTkButton(self, bg_color=main_fg, corner_radius=5,text='Add',width=rrw*1500, height=rrh*30, fg_color='#223e55').place(x=rrw*360, y=rrh*150)
+        newmethod_btn = customtkinter.CTkButton(self, bg_color=main_fg, corner_radius=5,text='Add',width=rrw*1575, height=rrh*30, fg_color='#223e55',text_color=label_text).place(x=rrw*322.5, y=rrh*150)
 
 
 class SupervisorScreen(customtkinter.CTkFrame):
@@ -320,7 +327,8 @@ class SupervisorScreen(customtkinter.CTkFrame):
         elif returncode == 2:
             returncode=0
             confirmation.destroy(),conf_text.destroy(),conf_cancel.destroy(),conf_OK.destroy()
-        
+    def newmethodbtn(self,master):
+        master.NewMethodFrame()
     def exitbutton(self,master):
         master.destroy()
     def sv_return(self,master, rrw, rrh):
@@ -342,22 +350,27 @@ class SupervisorScreen(customtkinter.CTkFrame):
         width, height = self.winfo_screenwidth(), self.winfo_screenheight()
         rrw = width/1920
         rrh= height/1080
+        left_slot = customtkinter.CTkButton(self,text=None,bg_color='#2b2b2b',fg_color='#2b2b2b',width=rrw*300,height=rrh*1080,corner_radius=0, hover=False).place(x=0,y=0)
         logo = customtkinter.CTkImage(dark_image= Image.open(r"RITBIO.png"),size=(rrw*400,rrh*400))   # change logo here - insert path if not in same folder, r" converts to raw string
-        logobutton = customtkinter.CTkButton(self,image= logo,bg_color= 'transparent',fg_color="transparent", text= None, hover=False)
+        logobutton = customtkinter.CTkButton(self,image= logo,bg_color= '#2b2b2b',fg_color='#2b2b2b', text= None, hover=False)
         logobutton.place( x=rrw*-70, y=rrh* -100)
-
+        homebtn = customtkinter.CTkButton(master=self, text="Home", text_color= '#212121', 
+                                              width=rrw*280, height = rrh*30, corner_radius= 5, fg_color='white', bg_color='#2b2b2b', hover=False).place(x=rrw*10, y=rrh*200)
+        
+        history_entrybtn = customtkinter.CTkButton(master=self, text="Record New Method", text_color= 'White', command = lambda:self.newmethodbtn(master), 
+                                              width=rrw*280, height = rrh*30, corner_radius= 5, bg_color='#2b2b2b').place(x=rrw*10, y=rrh*240)
         sv_notice = customtkinter.CTkButton(master=self, text="Supervisor Mode", text_color='White', font= ('Segoe UI', 15), fg_color='maroon', width=rrw*1920, height=rrh*10, corner_radius=0)
         
 
         ## left panel
-        exitbtn = customtkinter.CTkButton(master=self, text="Exit", text_color= 'white', command=lambda:self.exitbutton(master), fg_color='black', width=rrw*280, height = rrh*40, hover_color='maroon',bg_color= 'transparent', corner_radius= 10)
+        exitbtn = customtkinter.CTkButton(master=self, text="Exit", text_color= 'white', command=lambda:self.exitbutton(master), width=rrw*280, height = rrh*30, hover_color='maroon',bg_color= '#2b2b2b', corner_radius= 5)
         exitbtn.place(x=rrw*10, y=rrh*1030)
 
-        sv_returnbtn = customtkinter.CTkButton(master=self, text="Return to user mode", text_color= 'White', command = lambda:self.sv_return(master,rrw,rrh), width=rrw*280, height = rrh*40, corner_radius= 10)
-        sv_returnbtn.place(x=rrw*10, y=rrh*970)
-
+        sv_returnbtn = customtkinter.CTkButton(master=self, text="Return to user mode", text_color= 'White', command = lambda:self.sv_return(master,rrw,rrh), width=rrw*280, height = rrh*30, corner_radius= 5, bg_color='#2b2b2b')
+        sv_returnbtn.place(x=rrw*10, y=rrh*990)
+        main_bg='#e0e0e0'
         ## main screen
-        mainscreen = customtkinter.CTkLabel(self, text=None, fg_color='#c1c1c1', height=rrh*1060, width=rrw*1610, corner_radius = 10)
+        mainscreen = customtkinter.CTkLabel(self, text=None, fg_color=main_bg, height=rrh*1060, width=rrw*1610, corner_radius = 10)
         mainscreen.place(x=rrw*300, y=rrh*10)
         sv_notice.place(x=0,y=0)
         sv_notice.lift()
@@ -375,9 +388,11 @@ class App(customtkinter.CTk):
         self.sv_frame.pack_forget()
         self.home_frame.pack()
     def SVFrame(self):
+        self.newmethod_frame.pack_forget()
         self.login_frame.pack_forget()
         self.sv_frame.pack()
     def NewMethodFrame(self):
+        self.sv_frame.pack_forget()
         self.home_frame.pack_forget()
         self.newmethod_frame.pack()
 
