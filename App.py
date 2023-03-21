@@ -15,12 +15,13 @@ from datetime import date
 ## 27/2/2023 - Supervisor Screen frame designed + return button with confirmation 
 ## 25/2/2023 - Home screen frame designed with supervisor login and exit buttons, white patch on right side of screen to display information
 ##           - Login Screen integrated with supervisor login button, detects valid username password, can go back to home screen 
-global History_Set, rrw, rrh
+global History_Set, rrw, rrh, RS_set
 db_count=0
 History_set = pd.read_excel(r'Test_Set.xlsx')
+RS_set = pd.read_excel(r'Test_RS.xlsx')
 
 for hist_setup in range (0,10):                                          # Adds 5 extra rows to History_set dataframe
-    History_set.loc[History_set.shape[0]] = [None, None, None, None]    # Avoids index out of bounds errors
+    History_set.loc[History_set.shape[0]] = [None, None, None, None, None, None, None, None, None]    # Avoids index out of bounds errors
 
 
 class LoginScreen(customtkinter.CTkFrame):   #Each Screen is a different CTK Frame
@@ -124,59 +125,94 @@ class HomeScreen(customtkinter.CTkFrame):
 
         History_slot = customtkinter.CTkLabel(self, text=None, fg_color=main_fg, bg_color=main_bg, width = rrw*1600, height = rrh*500, corner_radius= 10).place(x=rrw*310, y=rrh*10)
         #History_Frame = customtkinter.CTkLabel(self, text=None, fg_color=widget_color, bg_color=main_fg, width=1560, height= 460, corner_radius=10).place(x=330, y=30)
-        History_Date_Label = customtkinter.CTkLabel(self, text="Date", fg_color='#223e55', bg_color=main_fg,width=rrw*400, height=rrh*30, corner_radius=0,font=('Segoe UI', rrh*20), text_color=main_text).place(x=rrw*330,y=rrh*30)
-        History_X_Label = customtkinter.CTkLabel(self, text="Label X", fg_color='#223e55', bg_color=main_fg,width=rrw*386, height=rrh*30, corner_radius=0,font=('Segoe UI', rrh*20), text_color=main_text).place(x=rrw*731,y=rrh*30)
-        History_Y_Label = customtkinter.CTkLabel(self, text="Label Y", fg_color='#223e55', bg_color=main_fg,width=rrw*386, height=rrh*30, corner_radius=0,font=('Segoe UI', rrh*20), text_color=main_text).place(x=rrw*1118,y=rrh*30)
-        History_Z_Label = customtkinter.CTkLabel(self, text="Label Z", fg_color='#223e55', bg_color=main_fg,width=rrw*386, height=rrh*30, corner_radius=0,font=('Segoe UI', rrh*20), text_color=main_text).place(x=rrw*1505,y=rrh*30)
+        History_RC_Label = customtkinter.CTkLabel(self, text="Robot Code", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=main_text).place(x=rrw*322.5,y=rrh*30)
+        History_Date_Label = customtkinter.CTkLabel(self, text="Date", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=main_text).place(x=rrw*497.5,y=rrh*30)
+        History_R1_Label = customtkinter.CTkLabel(self, text="Reagent 1", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=main_text).place(x=rrw*672.5,y=rrh*30)
+        History_R2_Label = customtkinter.CTkLabel(self, text="Reagent 2", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=main_text).place(x=rrw*847.5,y=rrh*30)
+        History_TSR_Label = customtkinter.CTkLabel(self, text="Thermal Shaker RPM", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=main_text).place(x=rrw*1022.5,y=rrh*30)
+        History_TSD_Label = customtkinter.CTkLabel(self, text="Thermal Shaker Duration", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=main_text).place(x=rrw*1197.5,y=rrh*30)
+        History_TST_Label = customtkinter.CTkLabel(self, text="Thermal Shaker Temperature", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=main_text).place(x=rrw*1372.5,y=rrh*30)
+        History_CR_Label = customtkinter.CTkLabel(self, text="Centrifuge RPM", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=main_text).place(x=rrw*1547.5,y=rrh*30)
+        History_CD_Label = customtkinter.CTkLabel(self, text="Centrifuge Duration", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=main_text).place(x=rrw*1722.5,y=rrh*30)
         History_set=History_set.sort_values(by="Date", ascending=False)
 
         count=0
-        for y_pos in range(100,500,50):     #alternative method is to use TreeView, which seemed very clunky and confusing + had the same #, if not more, lines of code
-            if np.isnat(np.datetime64(str(History_set.iloc[count,0]))) == False:
-                History_Date=customtkinter.CTkButton(self,  text=History_set.iloc[count,0], width = rrw*400, height=rrh*30, 
-                                                     bg_color=main_fg, fg_color=main_fg, text_color=main_text, font=('Segoe UI', rrh*20)).place(x=rrw*330, y=rrh*y_pos)
-                History_X=customtkinter.CTkButton(self, text=History_set.iloc[count,1], width = rrw*400, height=rrh*30,
-                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text, font=('Segoe UI', rrh*20)).place(x=rrw*731, y=rrh*y_pos)
-                History_Y=customtkinter.CTkButton(self, text=History_set.iloc[count,2], width = rrw*400, height=rrh*30,
-                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text, font=('Segoe UI', rrh*20)).place(x=rrw*1118, y=rrh*y_pos)
-                History_Z=customtkinter.CTkButton(self, text=History_set.iloc[count,3], width = rrw*400, height=rrh*30,
-                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text, font=('Segoe UI', rrh*20)).place(x=rrw*1505, y=rrh*y_pos)
+        for y_pos in range(80,480,50):     #alternative method is to use TreeView, which seemed very clunky and confusing + had the same #, if not more, lines of code
+            if np.isnat(np.datetime64(str(History_set.iloc[count,1]))) == False:
+                History_RC=customtkinter.CTkButton(self,  text=History_set.iloc[count,0], width = rrw*175, height=rrh*30, 
+                                                     bg_color=main_fg, fg_color=main_fg, text_color=main_text).place(x=rrw*322.5, y=rrh*y_pos)
+                History_Date=customtkinter.CTkButton(self, text=History_set.iloc[count,1], width = rrw*175, height=rrh*30,
+                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text).place(x=rrw*497.5, y=rrh*y_pos)
+                History_R1=customtkinter.CTkButton(self, text=History_set.iloc[count,2], width = rrw*175, height=rrh*30,
+                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text).place(x=rrw*672.5, y=rrh*y_pos)
+                History_R2=customtkinter.CTkButton(self, text=History_set.iloc[count,3], width = rrw*175, height=rrh*30,
+                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text).place(x=rrw*847.5, y=rrh*y_pos)
+                History_TSR=customtkinter.CTkButton(self,  text=History_set.iloc[count,4], width = rrw*175, height=rrh*30, 
+                                                     bg_color=main_fg, fg_color=main_fg, text_color=main_text).place(x=rrw*1022.5, y=rrh*y_pos)
+                History_TSD=customtkinter.CTkButton(self, text=History_set.iloc[count,5], width = rrw*175, height=rrh*30,
+                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text).place(x=rrw*1197.5, y=rrh*y_pos)
+                History_TST=customtkinter.CTkButton(self, text=History_set.iloc[count,6], width = rrw*175, height=rrh*30,
+                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text).place(x=rrw*1372.5, y=rrh*y_pos)
+                History_CR=customtkinter.CTkButton(self, text=History_set.iloc[count,7], width = rrw*175, height=rrh*30,
+                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text).place(x=rrw*1547.5, y=rrh*y_pos)
+                History_CD=customtkinter.CTkButton(self, text=History_set.iloc[count,8], width = rrw*175, height=rrh*30,
+                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text).place(x=rrw*1722.5, y=rrh*y_pos)
             count+=1
         
+        ## REAGENT OPTIONS
+        temp_slot = customtkinter.CTkLabel(self, text=None, fg_color=main_fg, bg_color=main_bg, width = rrw*500, height = rrh*270, corner_radius= 5).place(x=rrw*730, y=rrh*520)
 
-
+        ## THERMAL SHAKER OPTIONS
         TS_RPM_options = ['400','600','750','900','1000','1150','1250','1350','1500'] #500:500:4000
-        TS_RPM_slot = customtkinter.CTkLabel(self, text=None, fg_color=main_fg, bg_color=main_bg, width = rrw*500, height = rrh*300, corner_radius= 5).place(x=rrw*310, y=rrh*520)
+        TS_slot = customtkinter.CTkLabel(self, text=None, fg_color=main_fg, bg_color=main_bg, width = rrw*500, height = rrh*270, corner_radius= 5).place(x=rrw*730, y=rrh*800)
         TS_RPM_Label = customtkinter.CTkLabel(self, text = "Select Thermal Shaker RPM: ", fg_color=main_fg, bg_color=main_fg, text_color=main_text
-                                              ,font=('Segoe UI', rrh*20)).place(x=rrw*330, y=rrh*555)
+                                              ,font=('Segoe UI', rrh*20)).place(x=rrw*750, y=rrh*835)
         
         
-        TS_RPM_Menu = customtkinter.CTkOptionMenu(self, fg_color=widget_color, bg_color=main_fg, values=TS_RPM_options, width=rrw*115, height=rrh*30,dropdown_font=('Segoe UI', 15)
-                                                  ,font=('Segoe UI', rrh*15),text_color=main_text).place(x=rrw*660,y=rrh*555)
+        TS_RPM_Menu = customtkinter.CTkOptionMenu(self, fg_color=widget_color, bg_color=main_fg, values=TS_RPM_options, width=rrw*130, height=rrh*30,dropdown_font=('Segoe UI', 15)
+                                                  ,font=('Segoe UI', rrh*15),text_color=main_text).place(x=rrw*1080,y=rrh*835)
 
         
         TS_Duration_Label = customtkinter.CTkLabel(self, text = "Select Thermal Shaker Duration (s): ", fg_color=main_fg, bg_color=main_fg, text_color=main_text
-                                              ,font=('Segoe UI', rrh*20)).place(x=rrw*330, y=rrh*610)
+                                              ,font=('Segoe UI', rrh*20)).place(x=rrw*750, y=rrh*890)
         
-        TS_Duration_Menu = customtkinter.CTkEntry(self, fg_color=widget_color, bg_color=main_fg, width=rrw*115, height=rrh*30
-                                                  ,font=('Segoe UI', rrh*15),border_color=widget_color).place(x=rrw*660,y=rrh*610)
+        TS_Duration_Menu = customtkinter.CTkEntry(self, fg_color=widget_color, bg_color=main_fg, width=rrw*130, height=rrh*30
+                                                  ,font=('Segoe UI', rrh*15),border_color=widget_color,placeholder_text='Required').place(x=rrw*1080,y=rrh*890)
         
-        TS_Duration_Label = customtkinter.CTkLabel(self, text = "Select Thermal Shaker Temperature: ", fg_color=main_fg, bg_color=main_fg, text_color=main_text
-                                              ,font=('Segoe UI', rrh*20)).place(x=rrw*330, y=rrh*665)
+        TS_Temp_Label = customtkinter.CTkLabel(self, text = "Select Thermal Shaker Temperature: ", fg_color=main_fg, bg_color=main_fg, text_color=main_text
+                                              ,font=('Segoe UI', rrh*20)).place(x=rrw*750, y=rrh*945)
         
-        TS_Duration_Menu = customtkinter.CTkEntry(self, fg_color=widget_color, bg_color=main_fg, width=rrw*115, height=rrh*30, border_color=widget_color
-                                                  ,font=('Segoe UI', rrh*15)).place(x=rrw*660,y=rrh*665)
+        TS_Temp_Menu = customtkinter.CTkEntry(self, fg_color=widget_color, bg_color=main_fg, width=rrw*130, height=rrh*30, border_color=widget_color
+                                                  ,font=('Segoe UI', rrh*15), placeholder_text='Optional').place(x=rrw*1080,y=rrh*945)
         
         TS_Start_Button = customtkinter.CTkButton(self, fg_color=widget_color, bg_color=main_fg, width=rrw*460, height=rrh*50
-                                                  , text="Begin").place(x=rrw*330,y=rrh*750) # add ',command = lambda: **function**, after 'text = 'Begin' '
+                                                  , text="Begin").place(x=rrw*750,y=rrh*1000) # add ',command = lambda: **function**, after 'text = 'Begin' '
+        
+        ## REAGENTS AND SAMPLES VIEW    slot.place(x=rrw*310, y=rrh*520)
 
-        temp1_slot = customtkinter.CTkLabel(self, text=None, fg_color=main_fg, bg_color=main_bg, width = rrw*500, height = rrh*430, corner_radius= 5).place(x=rrw*310, y=rrh*830)
+        RS_slot = customtkinter.CTkLabel(self, text=None, fg_color=main_fg, bg_color=main_bg, width = rrw*410, height = rrh*550, corner_radius= 5).place(x=rrw*310, y=rrh*520)
+        av_check=0
+        count=0
+        for x_pos in range (330,700,100):
+            count = 0
+            for y_pos in range (550,980,100):
+                
+                if RS_set.iloc[count,av_check]==1:
+                    RS_grid = customtkinter.CTkButton(self,text=str(count+1), fg_color='green', bg_color=main_fg, width= 70, height = 70, corner_radius= 20, hover_color='light green').place(x=rrw*x_pos, y=rrh*y_pos)
+                elif RS_set.iloc[count,av_check]==2:
+                    RS_grid = customtkinter.CTkButton(self,text=str(count+1), fg_color=widget_color, bg_color=main_fg, width= 70, height = 70, corner_radius= 20).place(x=rrw*x_pos, y=rrh*y_pos)
+                else:
+                    RS_grid = customtkinter.CTkButton(self,text=str(count+1), fg_color='maroon', bg_color=main_fg, width= 70, height = 70, corner_radius= 20, hover=False).place(x=rrw*x_pos, y=rrh*y_pos)
+                count+=1
+            av_check+=2
+        Reagent_legend = customtkinter.CTkButton(self, text = "Reagent", fg_color=widget_color, bg_color=main_fg, width = rrw*185, height=rrh* 20, hover=False, corner_radius=0).place(x=rrw*330,y=rrh*1040)
+        Sample_legend = customtkinter.CTkButton(self, text = "Sample", fg_color='green', bg_color=main_fg, width = rrw*185, height=rrh* 20, hover=False, corner_radius=0).place(x=rrw*515,y=rrh*1040)
 
-        temp2_slot = customtkinter.CTkLabel(self, text=None, fg_color=main_fg, bg_color=main_bg, width = rrw*500, height = rrh*540, corner_radius= 5).place(x=rrw*820, y=rrh*520)
+        
 
-        temp3_slot = customtkinter.CTkLabel(self, text=None, fg_color=main_fg, bg_color=main_bg, width = rrw*580, height = rrh*265, corner_radius= 5).place(x=rrw*1330, y=rrh*520)
+        temp3_slot = customtkinter.CTkLabel(self, text=None, fg_color=main_fg, bg_color=main_bg, width = rrw*580, height = rrh*270, corner_radius= 5).place(x=rrw*1330, y=rrh*520)
 
-        temp4_slot = customtkinter.CTkLabel(self, text=None, fg_color=main_fg, bg_color=main_bg, width = rrw*580, height = rrh*265, corner_radius= 5).place(x=rrw*1330, y=rrh*795)
+        temp4_slot = customtkinter.CTkLabel(self, text=None, fg_color=main_fg, bg_color=main_bg, width = rrw*580, height = rrh*270, corner_radius= 5).place(x=rrw*1330, y=rrh*800)
 
 
 class NewMethodScreen(customtkinter.CTkFrame):
@@ -227,19 +263,38 @@ class NewMethodScreen(customtkinter.CTkFrame):
 
         History_slot = customtkinter.CTkLabel(self, text=None, fg_color=main_fg, bg_color=main_bg, width = rrw*1600, height = rrh*860, corner_radius= 10).place(x=rrw*310, y=rrh*190)
         #History_Frame = customtkinter.CTkLabel(self, text=None, fg_color=widget_color, bg_color=main_fg, width=1560, height= 460, corner_radius=10).place(x=330, y=30)
-        History_Date_Label = customtkinter.CTkLabel(self, text="Date", fg_color='#223e55', bg_color=main_fg,width=rrw*400, height=rrh*30, corner_radius=0,font=('Segoe UI', rrh*20), text_color=main_text).place(x=rrw*330,y=rrh*210)
-        History_X_Label = customtkinter.CTkLabel(self, text="Label X", fg_color='#223e55', bg_color=main_fg,width=rrw*386, height=rrh*30, corner_radius=0,font=('Segoe UI', rrh*20), text_color=main_text).place(x=rrw*731,y=rrh*210)
-        History_Y_Label = customtkinter.CTkLabel(self, text="Label Y", fg_color='#223e55', bg_color=main_fg,width=rrw*386, height=rrh*30, corner_radius=0,font=('Segoe UI', rrh*20), text_color=main_text).place(x=rrw*1118,y=rrh*210)
-        History_Z_Label = customtkinter.CTkLabel(self, text="Label Z", fg_color='#223e55', bg_color=main_fg,width=rrw*386, height=rrh*30, corner_radius=0,font=('Segoe UI', rrh*20), text_color=main_text).place(x=rrw*1505,y=rrh*210)
+        History_RC_Label = customtkinter.CTkLabel(self, text="Robot Code", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=main_text).place(x=rrw*322.5,y=rrh*200)
+        History_Date_Label = customtkinter.CTkLabel(self, text="Date", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=main_text).place(x=rrw*497.5,y=rrh*200)
+        History_R1_Label = customtkinter.CTkLabel(self, text="Reagent 1", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=main_text).place(x=rrw*672.5,y=rrh*200)
+        History_R2_Label = customtkinter.CTkLabel(self, text="Reagent 2", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=main_text).place(x=rrw*847.5,y=rrh*200)
+        History_TSR_Label = customtkinter.CTkLabel(self, text="Thermal Shaker RPM", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=main_text).place(x=rrw*1022.5,y=rrh*200)
+        History_TSD_Label = customtkinter.CTkLabel(self, text="Thermal Shaker Duration", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=main_text).place(x=rrw*1197.5,y=rrh*200)
+        History_TST_Label = customtkinter.CTkLabel(self, text="Thermal Shaker Temperature", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=main_text).place(x=rrw*1372.5,y=rrh*200)
+        History_CR_Label = customtkinter.CTkLabel(self, text="Centrifuge RPM", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=main_text).place(x=rrw*1547.5,y=rrh*200)
+        History_CD_Label = customtkinter.CTkLabel(self, text="Centrifuge Duration", fg_color='#223e55', bg_color=main_fg,width=rrw*175, height=rrh*30, corner_radius=0, text_color=main_text).place(x=rrw*1722.5,y=rrh*200)
         History_set=History_set.sort_values(by="Date", ascending=False)
-        count=0
 
-        for y_pos in range(290,990,50):     #alternative method is to use TreeView, which seemed very clunky and confusing + had the same #, if not more, lines of code
-            if np.isnat(np.datetime64(str(History_set.iloc[count,0]))) == False:
-                History_Date=customtkinter.CTkLabel(self,  text=History_set.iloc[count,0], width = rrw*400, height=rrh*30, bg_color=main_fg, fg_color=main_fg, text_color=main_text, font=('Segoe UI', 20)).place(x=rrw*330, y=rrh*y_pos)
-                History_X=customtkinter.CTkLabel(self, text=History_set.iloc[count,1], width = rrw*400, height=rrh*30, bg_color=main_fg, fg_color=main_fg, text_color=main_text, font=('Segoe UI', 20)).place(x=rrw*731, y=rrh*y_pos)
-                History_Y=customtkinter.CTkLabel(self, text=History_set.iloc[count,2], width = rrw*400, height=rrh*30, bg_color=main_fg, fg_color=main_fg, text_color=main_text, font=('Segoe UI', 20)).place(x=rrw*1118, y=rrh*y_pos)
-                History_Z=customtkinter.CTkLabel(self, text=History_set.iloc[count,3], width = rrw*400, height=rrh*30, bg_color=main_fg, fg_color=main_fg, text_color=main_text, font=('Segoe UI', 20)).place(x=rrw*1505, y=rrh*y_pos)
+        count=0
+        for y_pos in range(250,950,50):     #alternative method is to use TreeView, which seemed very clunky and confusing + had the same #, if not more, lines of code
+            if np.isnat(np.datetime64(str(History_set.iloc[count,1]))) == False:
+                History_RC=customtkinter.CTkButton(self,  text=History_set.iloc[count,0], width = rrw*175, height=rrh*30, 
+                                                     bg_color=main_fg, fg_color=main_fg, text_color=main_text, hover= False).place(x=rrw*322.5, y=rrh*y_pos)
+                History_Date=customtkinter.CTkButton(self, text=History_set.iloc[count,1], width = rrw*175, height=rrh*30,
+                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text, hover= False).place(x=rrw*497.5, y=rrh*y_pos)
+                History_R1=customtkinter.CTkButton(self, text=History_set.iloc[count,2], width = rrw*175, height=rrh*30,
+                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text, hover= False).place(x=rrw*672.5, y=rrh*y_pos)
+                History_R2=customtkinter.CTkButton(self, text=History_set.iloc[count,3], width = rrw*175, height=rrh*30,
+                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text, hover= False).place(x=rrw*847.5, y=rrh*y_pos)
+                History_TSR=customtkinter.CTkButton(self,  text=History_set.iloc[count,4], width = rrw*175, height=rrh*30, 
+                                                     bg_color=main_fg, fg_color=main_fg, text_color=main_text, hover= False).place(x=rrw*1022.5, y=rrh*y_pos)
+                History_TSD=customtkinter.CTkButton(self, text=History_set.iloc[count,5], width = rrw*175, height=rrh*30,
+                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text, hover= False).place(x=rrw*1197.5, y=rrh*y_pos)
+                History_TST=customtkinter.CTkButton(self, text=History_set.iloc[count,6], width = rrw*175, height=rrh*30,
+                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text, hover= False).place(x=rrw*1372.5, y=rrh*y_pos)
+                History_CR=customtkinter.CTkButton(self, text=History_set.iloc[count,7], width = rrw*175, height=rrh*30,
+                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text, hover= False).place(x=rrw*1547.5, y=rrh*y_pos)
+                History_CD=customtkinter.CTkButton(self, text=History_set.iloc[count,8], width = rrw*175, height=rrh*30,
+                                                   bg_color=main_fg, fg_color=main_fg, text_color=main_text, hover= False).place(x=rrw*1722.5, y=rrh*y_pos)
             count+=1
         db_count=0
         newmethod_label = customtkinter.CTkLabel(self,text="Add a new method:", text_color=main_text,bg_color=main_bg,fg_color=main_bg, font=('Segoe UI', rrh*20),
